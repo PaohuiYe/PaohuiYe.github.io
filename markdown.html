@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Markdown Editor</title>
+ 
+    <link rel="stylesheet" type="text/css" href="markdown.css"> 
+    <script src="tree.js"></script>
+    <script src="queen.js"></script>
+    <script src="stack.js"></script>
+	<script src="highlight.pack.js"></script>
+	<script src="./jquery-3.4.1.min.js"></script>
+	<script src="colorboard.js"></script>
+
+    <link rel="stylesheet" href="dark.css">
+	<link rel="stylesheet" type="text/css" href="iconfont.css" />
+	<link rel="stylesheet" type="text/css" href="colorboard.css" />
+	
+
+</head>
+<body>
+<header>
+        <div class="drop-down">
+            <a href="index.html" class="iconfont">&#xe607;</a>
+        </div>
+
+        <div class="drop-down">
+            <a onclick="GrammarTips()" class="iconfont">&#xe6d1;</a>
+        </div>
+
+        <div class="drop-down">
+            <a id="viewModel" onclick="TurnToViedModel()" class="iconfont">&#xe614;</a>
+        </div>
+
+        <div class="drop-down">
+            <a class="iconfont">&#xe679;</a>
+            <div id="color_board0" class="color_boards"></div>
+        </div>
+    </header>
+    <div id="text_area">
+        <div id="in_wrap" class="text_wrap"><div id="in" class="text" spellcheck="false" oninput="input()"></div></div><div id="out_wrap" class="text_wrap"><div id="out" class="text" spellcheck="false"></div></div>
+    </div>
+	<footer class="dropArrow">       
+		<p>最后修改于：2020/4/1</p>
+    </footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        creatColorBoard(0);
+
+        let textAreaModel = 1;//0:纯编辑模式   编辑预览模式  预览模式
+        let text_out = document.getElementById("out");
+        let text_in = document.getElementById("in");
+     
+        let text_area = document.getElementById("text_area");
+		let viewModel = document.getElementById("viewModel");
+        let current_mouseover = true;
+        text_in.addEventListener("scroll", () => {
+            if (current_mouseover) {
+                text_out.scrollTop = (text_in.scrollTop * 1.0 / text_in.scrollHeight) * text_out.scrollHeight;
+                // text_out.scrollTop = text_in.scrollTop;
+            }
+        })
+        text_out.addEventListener("scroll", () => {
+            if (!current_mouseover) {
+                text_in.scrollTop = (text_out.scrollTop * 1.0 / text_out.scrollHeight) * text_in.scrollHeight;
+                // text_in.scrollTop = text_out.scrollTop;
+            }
+        })
+        text_in.addEventListener("mouseover", () => {
+            current_mouseover = true;
+        })
+        text_out.addEventListener("mouseover", () => {
+            current_mouseover = false;
+        })
+
+
+
+		function GrammarTips(){
+			alert("支持\n斜体：*text*\n加粗：**text**\n斜体加粗：***text***\n高亮：==text==\n删除线：~~text~~\n\n分割线：\n---\n无序列表：- text\n引用：> text\n代码：\n```\ntext\n```\n链接：[text](url)\n图片：![text](url)\n");
+		}
+        
+        function TurnToViedModel() {
+            if (textAreaModel == 0) {
+                document.getElementById("in_wrap").style.display = "inline-block";
+                document.getElementById("out_wrap").style.display = "inline-block";
+                document.getElementById("in_wrap").style.width = "50%";
+                document.getElementById("out_wrap").style.width = "50%";
+				viewModel.innerHTML = '&#xe614;';
+				
+            }
+            else if (textAreaModel == 1) {
+                document.getElementById("in_wrap").style.display = "none";
+                document.getElementById("out_wrap").style.display = "inline-block";
+                document.getElementById("out_wrap").style.width = "100%";
+				viewModel.innerHTML = '&#xe65d;';
+            }
+            else {
+                document.getElementById("in_wrap").style.display = "inline-block";
+                document.getElementById("out_wrap").style.display = "none";
+                document.getElementById("in_wrap").style.width = "100%";
+				viewModel.innerHTML = '&#xe63a;';
+            }
+            if (++textAreaModel == 3) textAreaModel = 0;
+        }
+
+		window_size_changed();
+
+        function window_size_changed() {
+            text_area.style.height = innerHeight - 110 + "px";
+            text_area.style.width = "80%";
+
+        }
+        window.onresize = window_size_changed;
+       
+     
+        function addCodeLineNumber() {
+            let e = document.querySelectorAll("code");
+            let e_len = e.length;
+            for (let i = 0; i < e_len; i++) {
+                let t = e[i].innerHTML;
+
+                t = "<ul><li>" + t.replace(/\n/g, "\n</li><li>");
+
+                t = t.slice(0, t.lastIndexOf("<li>", 0));
+
+                t += "</ul>";
+                e[i].innerHTML = t;
+            }
+        }
+        function mdToHtml() {
+            let s = text_in.innerText;
+            s = s.replace(/</g, "&lt;");
+            s = buildTree(s);
+            text_out.innerHTML = s;
+            addCodeLineNumber();
+        }
+        function input() {
+
+            mdToHtml();
+            $('pre code').each(function (i, block) {
+                hljs.highlightBlock(block);
+            });
+          
+
+        }
+     input();
+
+    </script>
+</body>
+</html>

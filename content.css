@@ -1,0 +1,141 @@
+
+body {
+    background: #55afe4;
+	 -webkit-user-select: none;
+	 padding: 0;
+	 margin: 0;
+}
+/*菜单栏*/
+header {
+    color: #a7a7a7;
+    position: relative;
+    width: 95%;
+    margin: 15px auto 20px auto;        
+	padding-left: 10px;
+    height: 40px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 3px 3px 6px 3px rgba(0, 0, 0, .1);
+}
+
+    header::before {
+        /* background: #55afe4; */
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        filter: blur(20px);
+        z-index: -1;     
+    }
+
+.drop-down {
+    display: inline-block;
+    position: relative;
+}
+
+    .drop-down:hover .drop-down-content {
+        display: block;
+    }
+
+    .drop-down a {
+        padding: 10px;
+        display: block;
+        font-size: 18px;
+        text-align: left;
+        color: #a7a7a7;
+        text-decoration: none;
+    }
+
+        .drop-down a:hover {
+            color: #c8c8c8;
+        }
+
+.drop-down-content {
+    padding: 10px;
+    display: none;
+    position: absolute;
+    background-color: black;
+    opacity: 0.6;
+    min-width: 160px;
+    min-height: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+    .drop-down-content a, p {
+        color: #a7a7a7;
+        font-size: 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+/*颜色版*/	
+.drop-down:hover .color_boards {
+    display: block;
+}
+
+
+
+/*顶部标题*/
+#topTitle {
+    text-align: center;
+    margin: 50px 0;
+    font-size: 25px;
+    font-weight: bold;
+}
+/*内容*/
+main{
+	width:100%;
+}
+    main a:hover {
+        border-bottom: solid 1px black;
+    }
+
+li {
+    margin: 5px 10px;
+    padding: 5px;
+    border-bottom: solid 1px transparent;
+}
+
+.content {
+    width: 60%;
+    background: floralwhite;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin: 0 auto 50px auto;
+	box-shadow: 5px 2px 6px lightslategray;
+}
+.content a {
+    font-size: 15px;
+    padding: 0 0;
+    text-decoration: none;
+    color: black;
+	font-weight: 500;
+}
+
+/*页脚*/
+footer {
+    margin-bottom: 25px;	
+}
+	footer p{
+		margin: 0;
+		text-align: right;
+		padding-right: 25px;
+		color:black;
+		font-size: 10px;
+	}
+    footer a {
+        display: block;
+        text-align: center;
+        color: black;
+        text-decoration: none;
+        font-size: inherit;
+        font-weight: bold;
+    }
+
+        footer a:hover {
+            color: #333333;
+        }
+
+
